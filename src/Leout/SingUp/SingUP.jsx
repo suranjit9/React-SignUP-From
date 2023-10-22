@@ -1,20 +1,56 @@
 import { Link } from "react-router-dom";
-
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import auth from "../../FirBase/Firebase.init";
+import { useState } from "react";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const SingUP = () => {
-    
+    const googleprovider = new GoogleAuthProvider();
+    const [user, setUser] = useState('');
+    const [showError, setShowError] = useState('');
+    // Google and Git HUb Sing in Fun------------------------------------------------
+
+    // Google SingUP...............
+    const handaleGoogleSignin = ()=>{
+        console.log('click is OK')
+        signInWithPopup(auth, googleprovider)
+        .then(result =>{
+            const newUser = result.user;
+            setUser(newUser);
+            console.log(newUser);
+            toast("successfully Sign in!");
+        })
+        .catch(error=>{
+            setShowError(error.message);
+            toast("error !");
+        })
+
+    }
+    // Git Hub SingUP...............
+    const handaleGitHubSignin = ()=>{
+        console.log('click is OK')
+        signInWithPopup(auth, googleprovider)
+        .then(result =>{
+            const newUser = result.user;
+            setUser(newUser);
+            console.log(newUser);
+            toast("successfully Sign in!");
+        })
+        .catch(error=>{
+            setShowError(error.message);
+            toast("error !");
+        })
+
+    }
+
+    // Google and Git HUb Sing in Fun------------------------------------------------
     return (
-        <section className="h-screen">
-            <div className="h-full">
+        <section className=" w-[80%] mx-auto">
+            <div className="h-full ">
                 {/* <!-- Left column container with background--> */}
-                <div className="g-6 flex h-full flex-wrap items-center justify-center lg:justify-between">
-                    <div
-                        className="shrink-1 mb-12 grow-0 basis-auto md:mb-0 md:w-9/12 md:shrink-0 lg:w-6/12 xl:w-6/12">
-                        <img
-                            src="https://tecdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
-                            className="w-full"
-                            alt="Sample image" />
-                    </div>
+                <div className="g-6 flex h-full  items-center justify-center ">
+                    
 
                     {/* <!-- Right column container --> */}
                     <div className="mb-12 md:mb-0 md:w-8/12 lg:w-5/12 xl:w-5/12">
@@ -22,55 +58,45 @@ const SingUP = () => {
                             className="flex flex-row items-center justify-center lg:justify-start">
                             <p className="mb-0 mr-4 text-lg">Sign in with</p>
 
-                            {/* <!-- Facebook --> */}
+                            {/* <!-- Google --> */}
                             <button
+                                onClick={handaleGoogleSignin}
                                 type="button"
                                 data-te-ripple-init
                                 data-te-ripple-color="light"
                                 className="inlne-block mx-1 h-9 w-9 rounded-full bg-primary uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]">
-                                {/* <!-- Facebook --> */}
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    className="mx-auto h-3.5 w-3.5"
+                                {/* <!-- Google --> */}
+                                 <svg
+                                    viewBox="0 0 1024 1024"
+                                    className="mx-auto h-8 w-5"
                                     fill="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path
-                                        d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z" />
-                                </svg>
+                                    height="1em"
+                                    width="1em"
+                                    
+                                    >
+                                    <path d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm167 633.6C638.4 735 583 757 516.9 757c-95.7 0-178.5-54.9-218.8-134.9C281.5 589 272 551.6 272 512s9.5-77 26.1-110.1c40.3-80.1 123.1-135 218.8-135 66 0 121.4 24.3 163.9 63.8L610.6 401c-25.4-24.3-57.7-36.6-93.6-36.6-63.8 0-117.8 43.1-137.1 101-4.9 14.7-7.7 30.4-7.7 46.6s2.8 31.9 7.7 46.6c19.3 57.9 73.3 101 137 101 33 0 61-8.7 82.9-23.4 26-17.4 43.2-43.3 48.9-74H516.9v-94.8h230.7c2.9 16.1 4.4 32.8 4.4 50.1 0 74.7-26.7 137.4-73 180.1z" />
+                                    </svg>
+                                    <ToastContainer />
                             </button>
 
-                            {/* <!-- Twitter --> */}
+                            {/* <!-- GitHub --> */}
                             <button
+                                onClick={handaleGitHubSignin}
                                 type="button"
                                 data-te-ripple-init
                                 data-te-ripple-color="light"
                                 className="inlne-block mx-1 h-9 w-9 rounded-full bg-primary uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]">
-                                {/* <!-- Twitter --> */}
+                                {/* <!-- GitHub --> */}
                                 <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    className="mx-auto h-3.5 w-3.5"
                                     fill="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path
-                                        d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z" />
-                                </svg>
-                            </button>
-
-                            {/* <!-- Linkedin --> */}
-                            <button
-                                type="button"
-                                data-te-ripple-init
-                                data-te-ripple-color="light"
-                                className="inlne-block mx-1 h-9 w-9 rounded-full bg-primary uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]">
-                                {/* <!-- Linkedin --> */}
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    className="mx-auto h-3.5 w-3.5"
-                                    fill="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <pathx
-                                        d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.38 1.11-2.5 2.48-2.5s2.48 1.12 2.48 2.5zm.02 4.5h-5v16h5v-16zm7.982 0h-4.968v16h4.969v-8.399c0-4.67 6.029-5.052 6.029 0v8.399h4.988v-10.131c0-7.88-8.922-7.593-11.018-3.714v-2.155z" />
-                                </svg>
+                                    className="mx-auto h-8 w-5"
+                                    viewBox="0 0 16 16"
+                                    height="1em"
+                                    width="1em"
+                                    
+                                    >
+                                    <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0016 8c0-4.42-3.58-8-8-8z" />
+                                    </svg>
                             </button>
                         </div>
 
